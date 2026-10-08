@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anusikha N – QA Analyst (Manual Testing)</title>
+    <style>
+      :root {
+        --bg: #f3f6f8;
+        --surface: #fff;
+        --ink: #14232b;
+        --muted: #51636d;
+        --line: #d3dde3;
+        --accent: #0d6b73;
+        --flag: #c4380f;
+        --pass: #1d7a46;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1a20;
+          --surface: #162630;
+          --ink: #e8f0f3;
+          --muted: #9bb0ba;
+          --line: #2a3f4b;
+          --accent: #4fc3cc;
+          --flag: #ff8a65;
+          --pass: #5fd08d;
+        }
+      }
+      :root[data-theme="light"] {
+        --bg: #f3f6f8;
+        --surface: #fff;
+        --ink: #14232b;
+        --muted: #51636d;
+        --line: #d3dde3;
+        --accent: #0d6b73;
+        --flag: #c4380f;
+        --pass: #1d7a46;
+      }
+      :root[data-theme="dark"] {
+        --bg: #0f1a20;
+        --surface: #162630;
+        --ink: #e8f0f3;
+        --muted: #9bb0ba;
+        --line: #2a3f4b;
+        --accent: #4fc3cc;
+        --flag: #ff8a65;
+        --pass: #5fd08d;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          16px/1.6 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.15;
+        margin: 0;
+      }
+      a {
+        color: var(--accent);
+      }
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      nav {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px 0 8px;
+        font-size: 15px;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        padding-bottom: 2px;
+        border-bottom: 2px solid transparent;
+      }
+      nav a:hover {
+        color: var(--ink);
+      }
+      nav a.active {
+        color: var(--ink);
+        font-weight: 600;
+        border-bottom-color: var(--accent);
+      }
+      #theme-toggle {
+        margin-bottom: 8px;
+        padding: 6px 12px;
+        border: 1.5px solid var(--ink);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 40px;
+        align-items: center;
+        padding: 40px 0 64px;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 6vw, 56px);
+        font-weight: 700;
+      }
+      .hero p {
+        max-width: 52ch;
+        color: var(--muted);
+        margin: 18px 0 24px;
+      }
+      .btns {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 6px;
+        border: 1.5px solid var(--ink);
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .btn.primary {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .ticket {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--flag);
+        border-radius: 6px;
+        padding: 18px 20px;
+        font-size: 14.5px;
+      }
+      .ticket h3 {
+        font-size: 17px;
+        margin-bottom: 12px;
+      }
+      .ticket dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6px 14px;
+        margin: 0;
+      }
+      .ticket dt {
+        color: var(--muted);
+      }
+      .ticket dd {
+        margin: 0;
+      }
+      .tag {
+        display: inline-block;
+        padding: 1px 8px;
+        border-radius: 4px;
+        background: var(--flag);
+        color: #fff;
+        font-size: 13px;
+      }
+      .tag.ok {
+        background: var(--pass);
+      }
+      section {
+        padding: 48px 0;
+        border-top: 1px solid var(--line);
+      }
+      section > h2 {
+        font-size: 28px;
+        margin-bottom: 24px;
+      }
+      .proj {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 22px;
+        margin-bottom: 18px;
+      }
+      .proj h3 {
+        font-size: 21px;
+        margin-bottom: 4px;
+      }
+      .stack {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 12px;
+      }
+      .proj ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .proj li {
+        margin-bottom: 6px;
+      }
+      .skills {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+      .skills div {
+        border-left: 3px solid var(--accent);
+        padding-left: 14px;
+      }
+      .skills h3 {
+        font-size: 17px;
+        margin-bottom: 6px;
+      }
+      .skills p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .job {
+        margin-bottom: 22px;
+      }
+      .job h3 {
+        font-size: 19px;
+      }
+      .job .when {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 2px 0 8px;
+      }
+      .job ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      footer {
+        padding: 48px 0 64px;
+        border-top: 1px solid var(--line);
+      }
+      footer h2 {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      footer p {
+        margin: 6px 0;
+      }
+      @media (max-width: 720px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav aria-label="Sections">
+        <a href="#projects">Projects</a><a href="#skills">Skills</a
+        ><a href="#experience">Experience</a><a href="#contact">Contact</a>
+      </nav>
+      <button id="theme-toggle" type="button">Light / Dark</button>
+
+      <header class="hero">
+        <div>
+          <h1>I find the bugs before your users do.</h1>
+          <p>
+            I'm Anusikha N, a 2026 B.Tech graduate in Artificial Intelligence
+            and Data Science looking for a Quality Analyst role in manual
+            testing. I test web and Android apps, report defects in JIRA with
+            clear steps, and work closely with developers to get them fixed.
+          </p>
+          <div class="btns">
+            <a class="btn primary" href="mailto:anusikhan84@gmail.com"
+              >Email me</a
+            >
+            <a class="btn" href="#projects">See my projects</a>
+          </div>
+        </div>
+        <aside class="ticket" aria-label="Sample test summary">
+          <h3>Swiggy QA – test summary</h3>
+          <dl>
+            <dt>Test cases</dt>
+            <dd>25 executed</dd>
+            <dt>Platforms</dt>
+            <dd>Android, desktop browsers</dd>
+            <dt>Areas</dt>
+            <dd>Login, search, cart, checkout</dd>
+            <dt>Defects</dt>
+            <dd><span class="tag">8 reported in JIRA</span></dd>
+            <dt>Report</dt>
+            <dd><span class="tag ok">Pass/fail metrics shared</span></dd>
+          </dl>
+        </aside>
+      </header>
+
+      <section id="projects">
+        <h2>Projects</h2>
+
+        <article class="proj">
+          <h3>Manual QA testing: Swiggy mobile and web app</h3>
+          <p class="stack">Chrome DevTools, Lighthouse, JIRA</p>
+          <ul>
+            <li>
+              Wrote and executed 25 test cases on Android and desktop browsers,
+              covering functional, usability, negative and exploratory testing
+              of login, search, cart and checkout.
+            </li>
+            <li>
+              Checked responsive layout across screen sizes with Chrome DevTools
+              and ran Lighthouse audits to assess page performance.
+            </li>
+            <li>
+              Reported 8 defects in JIRA with severity, priority, reproduction
+              steps and screenshots, and prepared a test summary report with
+              pass/fail metrics.
+            </li>
+          </ul>
+        </article>
+
+        <article class="proj">
+          <h3>E-commerce website: manual and automation testing</h3>
+          <p class="stack">
+            Selenium WebDriver, Java, TestNG, Postman, SQL/MySQL, JIRA
+          </p>
+          <ul>
+            <li>
+              Tested login, product search, product selection, cart, checkout
+              and order flows.
+            </li>
+            <li>
+              Designed and ran positive, negative and boundary test cases and
+              logged defects in JIRA.
+            </li>
+            <li>
+              Automated login, product search and checkout with Selenium
+              WebDriver, Java and TestNG.
+            </li>
+            <li>
+              Tested APIs in Postman and validated application data with
+              SQL/MySQL queries.
+            </li>
+            <li>
+              Ran regression testing after fixes and prepared test execution and
+              defect reports.
+            </li>
+          </ul>
+        </article>
+
+        <article class="proj">
+          <h3>IRCTC train booking: test case design</h3>
+          <p class="stack">Manual testing, Microsoft Excel</p>
+          <ul>
+            <li>
+              Designed, executed and documented test cases in Excel for the full
+              booking journey: search, login, train selection, passenger
+              details, payment and confirmation.
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+          <div>
+            <h3>Testing</h3>
+            <p>
+              Test scenario and test case design, functional, regression,
+              performance, UI/usability, exploratory, responsive and
+              cross-browser testing, defect reporting and retesting, test
+              reports
+            </p>
+          </div>
+          <div>
+            <h3>QA process</h3>
+            <p>
+              STLC, SDLC, defect life cycle, requirement analysis, Agile, Scrum
+            </p>
+          </div>
+          <div>
+            <h3>Tools</h3>
+            <p>
+              JIRA, Postman, Selenium WebDriver, TestNG, Chrome DevTools,
+              Lighthouse, Excel, Google Sheets, Git, GitHub
+            </p>
+          </div>
+          <div>
+            <h3>API and databases</h3>
+            <p>REST API testing, JSON, SQL, MySQL</p>
+          </div>
+          <div>
+            <h3>Programming</h3>
+            <p>
+              Python, Java, JavaScript (ES6+), HTML5, CSS3, React, Spring Boot
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Experience and education</h2>
+        <div class="job">
+          <h3>Java Full Stack Developer Trainee, TAP Academy, Bangalore</h3>
+          <p class="when">Jan 2026 – Aug 2026</p>
+          <ul>
+            <li>
+              Tested and debugged responsive web apps built with Java, Spring,
+              Hibernate and React, including UI components and REST API
+              integrations, and checked data flow against SQL databases.
+            </li>
+            <li>
+              Worked in an Agile team using JIRA and Git: documented defects
+              clearly, clarified issues with developers and verified fixes by
+              retesting.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>Machine Learning Intern, IPCS Global</h3>
+          <p class="when">Sep 2025 – Oct 2025</p>
+          <ul>
+            <li>
+              Built ML models for prediction and classification and compared
+              results to choose the best approach.
+            </li>
+          </ul>
+        </div>
+        <div class="job">
+          <h3>B.Tech, Artificial Intelligence and Data Science</h3>
+          <p class="when">
+            2022 – 2026 · Dhanalakshmi Srinivasan College of Engineering,
+            Coimbatore · CGPA 8.2
+          </p>
+        </div>
+        <div class="job">
+          <h3>Achievements</h3>
+          <ul>
+            <li>
+              Completed Nestlé E-learning 2026 – Resilience (Nestlé Needs YOUth
+              Nesternship program); took part in hackathons and technology
+              podcasts.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <footer id="contact">
+        <h2>Let's work together</h2>
+        <p>I'm open to Quality Analyst roles in manual testing.</p>
+        <p>
+          Email:
+          <a href="mailto:anusikhan84@gmail.com">anusikhan84@gmail.com</a>
+        </p>
+        <p>Phone: <a href="tel:+919544209722">9544209722</a></p>
+        <p>
+          <a href="https://linkedin.com/in/anusikha-n">LinkedIn</a> ·
+          <a href="https://github.com/anusikha-1">GitHub</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Theme toggle (remembers the choice)
+      var btn = document.getElementById("theme-toggle");
+      var root = document.documentElement;
+
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) root.setAttribute("data-theme", saved);
+      } catch (e) {}
+
+      btn.addEventListener("click", function () {
+        var current = root.getAttribute("data-theme");
+        var isDark =
+          current === "dark" ||
+          (!current &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        var next = isDark ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try {
+          localStorage.setItem("theme", next);
+        } catch (e) {}
+      });
+
+      // Highlight the menu link of the section you are viewing
+      var links = document.querySelectorAll("nav a[href^='#']");
+      var sections = document.querySelectorAll("section[id], footer[id]");
+
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                links.forEach(function (l) {
+                  l.classList.remove("active");
+                });
+                var active = document.querySelector(
+                  'nav a[href="#' + entry.target.id + '"]',
+                );
+                if (active) active.classList.add("active");
+              }
+            });
+          },
+          { rootMargin: "-40% 0px -55% 0px" },
+        );
+
+        sections.forEach(function (s) {
+          observer.observe(s);
+        });
+      }
+    </script>
+  </body>
+</html>
